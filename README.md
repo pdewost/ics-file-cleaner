@@ -32,7 +32,7 @@ Outlook-generated `.ics` invitations often include `ORGANIZER`, `ATTENDEE`, and 
 
 ## Author
 
-[Philippe de Wost](https://linkedin.com/in/pdewost)
+[Philippe Dewost](https://linkedin.com/in/pdewost)
 
 ## License
 
