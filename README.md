@@ -1,37 +1,39 @@
-## Welcome to GitHub Pages
+# ics-file-cleaner
 
-You can use the [editor on GitHub](https://github.com/pdewost/ics-file-cleaner/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+An AppleScript Mail rule handler that cleans `.ics` calendar files sent from Outlook before importing them into Calendar (iCal) on macOS.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+## What it does
 
-### Markdown
+Outlook-generated `.ics` invitations often include `ORGANIZER`, `ATTENDEE`, and `PARTSTAT` fields that cause import errors or duplicate attendee noise in macOS Calendar. This script:
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+1. Detects `.ics` attachments via a Mail.app rule
+2. Saves them to `~/Downloads/<rule-name>/<timestamp>-<filename>.ics`
+3. Strips `ORGANIZER`, `ATTENDEE`, and `PARTSTAT` lines using `grep`
+4. Normalizes Windows CRLF line endings with `perl`
+5. Opens the cleaned file in Calendar.app and auto-confirms the import dialog
+6. Removes temporary files
 
-```markdown
-Syntax highlighted code block
+## Requirements
 
-# Header 1
-## Header 2
-### Header 3
+- macOS (tested on Snow Leopard and later)
+- Mail.app
+- Calendar.app (iCal)
+- Accessibility permissions for System Events (for UI scripting)
 
-- Bulleted
-- List
+## Installation
 
-1. Numbered
-2. List
+1. Copy the `.scpt` file to `~/Library/Application Scripts/com.apple.mail/`
+2. In Mail.app, create a rule that matches messages with `.ics` attachments and runs this script as the action
 
-**Bold** and _Italic_ and `Code` text
+## Notes
 
-[Link](url) and ![Image](src)
-```
+- The script is localized for French macOS (the import confirmation dialog button is `"Ajouter"`). If your macOS is in English, change `"Ajouter"` to `"Add"` in the script.
+- The `~/Downloads/` folder must exist before running.
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+## Author
 
-### Jekyll Themes
+[Philippe de Wost](https://linkedin.com/in/pdewost)
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/pdewost/ics-file-cleaner/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+## License
 
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+Apache License 2.0 — see [LICENSE](LICENSE).
